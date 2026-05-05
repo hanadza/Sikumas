@@ -72,17 +72,13 @@
     </div>
 
     <!-- Upload Bukti Bayar via QRIS Penjual -->
+    <!-- Upload Bukti Bayar via QRIS Penjual -->
     @if($order->status == 'pending')
-
-    @php
-        $seller = $order->items->first()?->product?->user;
-    @endphp
 
     <div class="bg-white rounded-xl shadow-sm border-2 border-green-200 p-6 mt-6">
         <h3 class="font-bold text-green-800 text-lg mb-1">💳 Pembayaran via QRIS</h3>
 
-        <!-- Detail Penjual -->
-        @if($seller)
+        @if(isset($seller) && $seller)
         <div class="bg-green-50 rounded-lg p-4 mb-4 flex items-center gap-3">
             <div class="w-12 h-12 bg-green-200 rounded-full flex items-center justify-center text-green-700 font-bold text-lg">
                 {{ strtoupper(substr($seller->name, 0, 1)) }}
@@ -95,11 +91,8 @@
                 @endif
             </div>
         </div>
-        @endif
 
-        <p class="text-sm text-gray-600 mb-4">Scan QRIS menggunakan <strong>Gopay, OVO, DANA, LinkAja, atau Mobile Banking</strong>.</p>
-
-        @if($seller?->qris_image)
+        @if(isset($seller->qris_image) && $seller->qris_image)
         <div class="flex flex-col items-center bg-gray-50 rounded-lg p-6 mb-4">
             <img src="{{ asset($seller->qris_image) }}" alt="QRIS {{ $seller->name }}" class="w-64 h-64 object-contain border-2 border-white rounded-lg shadow-sm">
             <p class="text-sm text-green-700 font-semibold mt-3">Total: Rp {{ number_format($order->total_price) }}</p>
@@ -107,7 +100,13 @@
         @else
         <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4 text-center">
             <p class="text-yellow-700 font-semibold">⚠️ Penjual belum mengatur QRIS</p>
-            <p class="text-sm text-yellow-600">Hubungi penjual: <strong>{{ $seller?->phone ?? '-' }}</strong></p>
+            <p class="text-sm text-yellow-600">Hubungi penjual: <strong>{{ $seller->phone ?? '-' }}</strong></p>
+        </div>
+        @endif
+
+        @else
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4 text-center">
+            <p class="text-yellow-700 font-semibold">⚠️ Informasi penjual tidak ditemukan</p>
         </div>
         @endif
 
@@ -116,7 +115,7 @@
             <ol class="list-decimal pl-5 text-sm text-blue-700 space-y-1">
                 <li>Buka aplikasi e-wallet atau mobile banking Anda.</li>
                 <li>Pilih menu <strong>Scan QRIS / Bayar</strong>.</li>
-                <li>Scan gambar QRIS penjual di atas.</li>
+                <li>Scan gambar QRIS (jika tersedia) atau transfer manual.</li>
                 <li>Masukkan nominal: <strong>Rp {{ number_format($order->total_price) }}</strong>.</li>
                 <li>Selesaikan pembayaran dan screenshot bukti sukses.</li>
             </ol>

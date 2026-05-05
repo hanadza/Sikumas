@@ -23,11 +23,20 @@ class OrderController extends Controller
   // Buyer: Detail pesanan + upload bayar + review
   public function show(Order $order)
   {
-    if ($order->user_id !== Auth::id()) {
-      abort(403);
+    try {
+      if ($order->user_id !== Auth::id()) {
+        abort(403);
+      }
+
+      $order->load('items.product.user', 'reviews');
+      $firstItem = $order->items->first();
+      $seller = ($firstItem && $firstItem->product) ? $firstItem->product->user : null;
+
+      return view('orders.show', compact('order', 'seller'));
+    } catch (\Exception $e) {
+      // Tampilkan pesan error (hanya untuk debug sementara)
+      return response('Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(), 500);
     }
-    $order->load('items.product', 'reviews');
-    return view('orders.show', compact('order'));
   }
 
   // Seller: Monitoring pesanan masuk
