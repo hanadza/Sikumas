@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\File;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,7 +15,12 @@ class AppServiceProvider extends ServiceProvider
 
   public function boot(): void
   {
-    // AUTO BUAT SYMLINK STORAGE KALAU BELUM ADA
+    // FORCE HTTPS kalau environment production
+    if (env('APP_ENV') === 'production') {
+      URL::forceScheme('https');
+    }
+
+    // Storage symlink
     try {
       $publicStorage = public_path('storage');
       $storageAppPublic = storage_path('app/public');
@@ -23,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
         File::link($storageAppPublic, $publicStorage);
       }
     } catch (\Exception $e) {
-      // Abaikan error symlink agar app tidak crash
+      //
     }
   }
 }
