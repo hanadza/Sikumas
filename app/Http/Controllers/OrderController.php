@@ -28,14 +28,26 @@ class OrderController extends Controller
         abort(403);
       }
 
+      // Load relasi
       $order->load('items.product.user', 'reviews');
-      $firstItem = $order->items->first();
-      $seller = ($firstItem && $firstItem->product) ? $firstItem->product->user : null;
+
+      // Ambil seller dengan cara aman
+      $seller = null;
+      foreach ($order->items as $item) {
+        if (isset($item->product) && isset($item->product->user)) {
+          $seller = $item->product->user;
+          break;
+        }
+      }
 
       return view('orders.show', compact('order', 'seller'));
     } catch (\Exception $e) {
-      // Tampilkan pesan error (hanya untuk debug sementara)
-      return response('Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine(), 500);
+      return response()->json([
+        'error' => $e->getMessage(),
+        'file' => $e->getFile(),
+        'line' => $e->getLine(),
+        'trace' => $e->getTraceAsString()
+      ], 500);
     }
   }
 
