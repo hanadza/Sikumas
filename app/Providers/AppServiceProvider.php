@@ -14,17 +14,16 @@ class AppServiceProvider extends ServiceProvider
 
   public function boot(): void
   {
-    // FIX: Auto-create storage symlink kalau belum ada atau corrupted
-    $publicStorage = public_path('storage');
-    $storageAppPublic = storage_path('app/public');
+    // AUTO BUAT SYMLINK STORAGE KALAU BELUM ADA
+    try {
+      $publicStorage = public_path('storage');
+      $storageAppPublic = storage_path('app/public');
 
-    if (!is_link($publicStorage)) {
-      if (is_dir($publicStorage)) {
-        File::deleteDirectory($publicStorage);
-      }
-      if (is_dir($storageAppPublic)) {
+      if (!file_exists($publicStorage) && is_dir($storageAppPublic)) {
         File::link($storageAppPublic, $publicStorage);
       }
+    } catch (\Exception $e) {
+      // Abaikan error symlink agar app tidak crash
     }
   }
 }
