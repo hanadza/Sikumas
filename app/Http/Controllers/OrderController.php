@@ -53,7 +53,10 @@ class OrderController extends Controller
       'status' => 'required|in:pending,paid,processing,shipped,completed,cancelled'
     ]);
 
-    // Verify seller owns at least one product in this order
+    $oldStatus = $order->status;
+    $newStatus = $request->status;
+
+    // Verifikasi seller punya produk di order ini
     $productIds = Product::where('user_id', Auth::id())->pluck('id');
     $hasProduct = $order->items()->whereIn('product_id', $productIds)->exists();
 
@@ -61,30 +64,22 @@ class OrderController extends Controller
       abort(403);
     }
 
-    $order->update(['status' => $request->status]);
+    $order->update(['status' => $newStatus]);
 
-    return back()->with('success', 'Status pesanan diperbarui menjadi: ' . $request->status);
-  }
-
-  // Seller: Input resi pengiriman
-  public function updateTracking(Request $request, Order $order)
-  {
-    $request->validate([
-      'tracking_number' => 'required|string|max:255'
-    ]);
-
-    $productIds = Product::where('user_id', Auth::id())->pluck('id');
-    $hasProduct = $order->items()->whereIn('product_id', $productIds)->exists();
-
-    if (!$hasProduct) {
-      abort(403);
+    // =============================
+    // FIX: Kurangi stok jika status berubah ke "completed"
+    // =============================
+    if ($newStatus === 'completed' && $oldStatus !== 'completed') {
+      foreach ($order->items as $item) {
+        $product = $item->product;
+        if ($product) {
+          // Pastikan stok tidak negatif
+          $newStock = max(0, $product->stock - $item->quantity);
+          $product->update(['stock' => $newStock]);
+        }
+      }
     }
 
-    $order->update([
-      'tracking_number' => $request->tracking_number,
-      'status' => 'shipped'
-    ]);
-
-    return back()->with('success', 'Nomor resi ditambahkan. Status: Dikirim.');
+    return back()->with('success', 'Status pesanan diperbarui menjadi: ' . ucfirst($newStatus));
   }
 }

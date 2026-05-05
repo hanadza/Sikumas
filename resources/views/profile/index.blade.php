@@ -57,12 +57,11 @@
                 <h4 class="font-bold text-green-800 mb-2">💳 QRIS Pembayaran</h4>
                 <p class="text-sm text-gray-600 mb-3">Upload gambar QRIS Anda. Pembeli akan melihat QRIS ini saat checkout.</p>
 
-                @if($user->qris_image)
-                <div class="mb-3">
-                    <p class="text-sm font-semibold text-gray-700 mb-1">QRIS Anda saat ini:</p>
-                    <img src="{{ asset($user->qris_image) }}" class="w-48 h-48 object-contain border rounded bg-white">
-                </div>
-                @endif
+            @if($user->qris_image)
+                <img src="{{ asset($user->qris_image) }}"
+                    class="w-48 h-48 object-contain border rounded bg-white"
+                    onerror="this.onerror=null; this.src='https://via.placeholder.com/200x200?text=QRIS+Belum+Ada';">
+            @endif
 
                 <input type="file" name="qris_image" accept="image/*"
                       class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm file:bg-green-100 file:border-0 file:rounded file:px-4 file:py-2 file:text-green-700">

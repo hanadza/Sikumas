@@ -61,7 +61,7 @@
         <h3 class="font-bold text-gray-800 mb-3">Produk Dibeli</h3>
         @foreach($order->items as $item)
         <div class="flex items-center gap-4 py-3 border-b border-gray-50 last:border-0">
-            <img src="{{ asset($item->product->image_url) }}" class="w-16 h-16 rounded object-cover">
+            <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=No+Image';">
             <div class="flex-grow">
                 <p class="font-medium">{{ $item->product->name }}</p>
                 <p class="text-sm text-gray-500">{{ $item->quantity }} x Rp {{ number_format($item->price) }}</p>
@@ -135,7 +135,7 @@
     @elseif($order->status == 'paid')
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 mt-6">
         <h3 class="font-bold text-gray-800 mb-3">✅ Bukti Pembayaran</h3>
-        <img src="{{ asset($order->payment_proof) }}" class="max-w-xs rounded border">
+        <img src="{{ asset($order->payment_proof) }}" class="max-w-xs rounded border" onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=Bukti+Tidak+Tersedia';">
         <p class="text-sm text-gray-500 mt-2">Diupload pada: {{ $order->updated_at->format('d M Y H:i') }}</p>
     </div>
     @endif

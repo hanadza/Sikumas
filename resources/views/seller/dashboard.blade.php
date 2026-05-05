@@ -58,7 +58,7 @@
                           class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-green-500 file:bg-green-50 file:border-0 file:rounded file:px-4 file:py-2 file:text-green-700 file:font-semibold hover:file:bg-green-100">
                     @isset($product)
                         <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin mengganti gambar.</p>
-                        <img src="{{ asset($product->image_url) }}" class="w-24 h-24 object-cover rounded mt-2 border">
+                        <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=No+Image';">
                     @endisset
                 </div>
 
@@ -85,7 +85,7 @@
             Monitoring Penjualan
         </a>
     </div>
-    
+
     <!-- Table Products -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <h2 class="text-lg font-bold p-6 border-b border-gray-100">Daftar Produk Anda</h2>
@@ -105,8 +105,7 @@
                     @forelse($products as $item)
                     <tr class="border-t border-gray-100 hover:bg-gray-50">
                         <td class="p-4">
-                            <img src="{{ asset($item->image_url) }}" alt="{{ $item->name }}" class="w-16 h-16 object-cover rounded">
-                        </td>
+                            <img<img src="{{ asset($item->image_url) }}" alt="{{ $item->name }}" class="w-16 h-16 object-cover rounded">                     </td>
                         <td class="p-4 font-medium">{{ $item->name }}</td>
                         <td class="p-4 text-sm text-gray-500">{{ $item->category }}</td>
                         <td class="p-4 text-green-600 font-semibold">Rp {{ number_format($item->price) }}</td>

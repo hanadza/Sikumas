@@ -59,7 +59,7 @@
     <div class="grid md:grid-cols-3 gap-6">
         @forelse($featured as $product)
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
-            <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">
+            <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=No+Image';">
             <div class="p-4">
                 <div class="flex justify-between items-start mb-2">
                   @if(Auth::check() && Auth::id() === $product->user_id)

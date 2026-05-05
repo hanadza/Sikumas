@@ -36,7 +36,7 @@
                     <div class="p-4">
                         @foreach ($order->items as $item)
                             <div class="flex items-center gap-3 mb-2">
-                                <img src="{{ asset($item->product->image_url) }}" class="w-12 h-12 rounded object-cover">
+                                <img src="{{ asset($item->product->image_url) }}" alt="{{ $item->product->name }}" class="w-full h-48 object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=No+Image';">
                                 <div class="flex-grow">
                                     <p class="font-medium text-gray-800">{{ $item->product->name }}</p>
                                     <p class="text-sm text-gray-500">{{ $item->quantity }} x Rp

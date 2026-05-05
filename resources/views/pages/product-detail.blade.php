@@ -7,7 +7,7 @@
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden max-w-4xl mx-auto">
         <div class="md:flex">
             <div class="md:w-1/2">
-                <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}" class="w-full h-96 object-cover">
+                <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=No+Image';">
             </div>
             <div class="p-8 md:w-1/2">
                 <span class="text-sm text-green-600 font-semibold bg-green-50 px-3 py-1 rounded-full">{{ $product->category }}</span>
