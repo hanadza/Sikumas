@@ -11,8 +11,8 @@
     </div>
 
     <div class="container mx-auto px-4 py-8">
-        <!-- Search & Filter -->
-<<<<<<< HEAD
+
+      <!-- Search & Filter -->
         <div class="bg-white p-4 rounded-lg shadow-sm mb-6 flex flex-col md:flex-row gap-4">
             <input type="text" placeholder="Search products..."
                 class="grow border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-green-500">
@@ -28,7 +28,7 @@
                 <option>Price: High to Low</option>
             </select>
         </div>
-=======
+
         <form method="GET" action="{{ route('products.index') }}"
             class="bg-white p-4 rounded-lg shadow-sm mb-6 flex flex-col md:flex-row gap-4">
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Search products..."
@@ -61,7 +61,6 @@
                     class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition text-center">Reset</a>
             @endif
         </form>
->>>>>>> 295783f (feat: add search, category filter, and price sort on products page)
 
         <!-- Product Grid -->
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
