@@ -7,6 +7,8 @@
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <title>@yield('title', 'SIKUMAS')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- Sementara pakai CDN Tailwind --}}
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-green-50 text-gray-800 font-sans min-h-screen flex flex-col">
