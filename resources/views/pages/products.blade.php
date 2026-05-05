@@ -12,23 +12,7 @@
 
     <div class="container mx-auto px-4 py-8">
 
-      <!-- Search & Filter -->
-        <div class="bg-white p-4 rounded-lg shadow-sm mb-6 flex flex-col md:flex-row gap-4">
-            <input type="text" placeholder="Search products..."
-                class="grow border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-green-500">
-            <select class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-green-500">
-                <option>All Categories</option>
-                <option>Raw Materials</option>
-                <option>Processed Products</option>
-                <option>Equipment</option>
-                <option>Services</option>
-            </select>
-            <select class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-green-500">
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-            </select>
-        </div>
-
+        <!-- Search & Filter -->
         <form method="GET" action="{{ route('products.index') }}"
             class="bg-white p-4 rounded-lg shadow-sm mb-6 flex flex-col md:flex-row gap-4">
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Search products..."
